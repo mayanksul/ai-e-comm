@@ -2,7 +2,7 @@
   "builds": [
     {
       "src": "src/streamlit_app.py",
-      "use": "@vercel/python",
+      "use": "@vercel/python", 
       "config": {
         "runtime": "python3.10",
         "includeFiles": [
@@ -17,5 +17,10 @@
       "src": "/(.*)",
       "dest": "src/streamlit_app.py"
     }
-  ]
-} 
+  ],
+  "functions": {
+    "api/**": {
+      "excludeFiles": "{.next,*.cache,node_modules,public,app}/**"
+    }
+  }
+}
