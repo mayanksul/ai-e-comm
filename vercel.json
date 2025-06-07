@@ -5,7 +5,10 @@
       "use": "@vercel/python",
       "config": {
         "runtime": "python3.10",
-        "maxLambdaSize": "250mb"
+        "includeFiles": [
+          "assets/**",
+          "data/raw/Apparels_shared.xlsx"
+        ]
       }
     }
   ],
@@ -14,10 +17,5 @@
       "src": "/(.*)",
       "dest": "src/streamlit_app.py"
     }
-  ],
-  "functions": {
-    "src/streamlit_app.py": {
-      "includeFiles": "assets/**"
-    }
-  }
+  ]
 } 
