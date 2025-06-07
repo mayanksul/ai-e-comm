@@ -1,17 +1,4 @@
 {
-  "builds": [
-    {
-      "src": "src/streamlit_app.py",
-      "use": "@vercel/python", 
-      "config": {
-        "runtime": "python3.10",
-        "includeFiles": [
-          "assets/**",
-          "data/raw/Apparels_shared.csv"
-        ]
-      }
-    }
-  ],
   "routes": [
     {
       "src": "/(.*)",
