@@ -29,7 +29,7 @@ def initialize_agents():
         "query": os.path.join(project_root, 'assets', 'prompts', 'conversation_builder_prompt.text'),
         "mapping": os.path.join(project_root, 'assets', 'prompts', 'mapping_builder_prompt.text'),
         "explainer": os.path.join(project_root, 'assets', 'prompts', 'explainer_prompt.text'),
-        "catalog": os.path.join(project_root, 'data', 'raw', 'Apparels_shared.xlsx')
+        "catalog": os.path.join(project_root, 'data', 'raw', 'Apparels_shared.csv')
     }
 
     query_agent = QueryAgent(paths["query"])

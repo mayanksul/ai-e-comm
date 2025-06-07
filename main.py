@@ -16,7 +16,7 @@ def main():
     query_prompt_path = os.path.join(project_root, 'assets', 'prompts', 'conversation_builder_prompt.text')
     mapping_prompt_path = os.path.join(project_root, 'assets', 'prompts', 'mapping_builder_prompt.text')
     explainer_prompt_path = os.path.join(project_root, 'assets', 'prompts', 'explainer_prompt.text')
-    catalog_path = os.path.join(project_root, 'data', 'raw', 'Apparels_shared.xlsx')
+    catalog_path = os.path.join(project_root, 'data', 'raw', 'Apparels_shared.csv')
 
     # --- 2. Instantiate Agents ---
     print("Initializing agents...")

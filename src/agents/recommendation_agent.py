@@ -33,8 +33,8 @@ class RecommendationAgent:
         if not Path(data_path).exists():
             raise FileNotFoundError(f"Data file not found at: {data_path}")
             
-        df = pd.read_excel(data_path)
-        
+        # df = pd.read_excel(data_path)
+        df = pd.read_csv(data_path)
         # Normalize text columns for case-insensitive matching
         for col in ["category", "fit", "fabric", "sleeve_length",
                     "color_or_print", "occasion", "neckline", "length", "pant_type"]:
@@ -132,7 +132,7 @@ if __name__ == '__main__':
 
     # 1. Define project paths
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
-    data_file_path = os.path.join(project_root, 'data', 'raw', 'Apparels_shared.xlsx')
+    data_file_path = os.path.join(project_root, 'data', 'raw', 'Apparels_shared.csv')
     
     # 2. Instantiate the agent
     recommender = RecommendationAgent(data_file_path)

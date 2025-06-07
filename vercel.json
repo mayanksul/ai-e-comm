@@ -7,7 +7,7 @@
         "runtime": "python3.10",
         "includeFiles": [
           "assets/**",
-          "data/raw/Apparels_shared.xlsx"
+          "data/raw/Apparels_shared.csv"
         ]
       }
     }
