@@ -4,7 +4,8 @@
       "src": "src/streamlit_app.py",
       "use": "@vercel/python",
       "config": {
-        "runtime": "python3.10"
+        "runtime": "python3.10",
+        "maxLambdaSize": "250mb"
       }
     }
   ],
@@ -13,5 +14,10 @@
       "src": "/(.*)",
       "dest": "src/streamlit_app.py"
     }
-  ]
+  ],
+  "functions": {
+    "src/streamlit_app.py": {
+      "includeFiles": "assets/**"
+    }
+  }
 } 
