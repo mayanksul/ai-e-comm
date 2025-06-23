@@ -62,7 +62,7 @@ One line, no markdown, minified json format. Also please mention the inferred pa
 
 
 ––––– 4. NEVER DO THIS –––––  
-• No irrelevant keys, no newline after JSON.  
+No irrelevant keys, no newline after JSON.  
 
 ---
 For example: 

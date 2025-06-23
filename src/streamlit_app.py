@@ -2,6 +2,30 @@ import streamlit as st
 import os
 import json
 import time
+import sys
+from loguru import logger
+def setup_logger():
+    """Configure loguru logger with custom formatting"""
+    config = {
+        "handlers": [
+            {
+                "sink": sys.stdout,
+                "format": "<fg #2E8B57>{time:hh:mm:ss A}</fg #2E8B57> | "
+                "{level: <8} | "
+                "<fg #4169E1>{module}:{line}</fg #4169E1> | "
+                "{message}",
+                "colorize": True,
+                "level": "DEBUG",
+            },
+        ],
+    }
+    logger.remove()
+    logger.configure(**config)
+    logger.level("ERROR", color="<red>")
+
+
+# Configure logger
+setup_logger()
 
 # Ensure the script can find the agent modules
 import sys
@@ -15,6 +39,9 @@ from agents.explainer_agent import ExplainerAgent
 st.set_page_config(page_title="Conversational Shopping Assistant", page_icon="🛍️")
 st.title("🛍️ Conversational Shopping Assistant")
 st.caption("Your AI-powered guide to finding the perfect outfit.")
+
+print("Starting Streamlit app...")
+print("="*80)
 
 # --- Agent Initialization ---
 @st.cache_resource
@@ -71,10 +98,14 @@ def run_full_pipeline():
         f"{'Shopper' if msg['role'] == 'user' else 'Assistant'}: {msg['content']}"
         for msg in st.session_state.messages[1:]  # Skip system prompt
     ])
+    print("="*80)
+    logger.info(f"Conversation history string: {conversation_history_str}")
+    print("="*80)
 
     with st.chat_message("assistant"):
         with st.spinner("Analyzing your preferences..."):
             mapping_dict = mapping_agent.get_mapping(conversation_history_str)
+            logger.info(f"Mapping dictionary: {mapping_dict}")
             if not mapping_dict:
                 st.error("Sorry, I couldn't understand your preferences. Could you please try again?")
                 return
@@ -83,6 +114,7 @@ def run_full_pipeline():
 
         with st.spinner("Searching for the perfect items..."):
             recommendations = recommendation_agent.get_recommendations(mapping_dict, n=2)
+            logger.info(f"Recommendations: {recommendations}")
             if not recommendations:
                 st.warning("I couldn't find any items that perfectly match. Let me find the next best things!")
                 # Optional: relax criteria and retry here
@@ -98,6 +130,7 @@ def run_full_pipeline():
                 candidates=recommendations
             )
             st.write("✅ Done!")
+            logger.info(f"Final explanation: {final_explanation}")
 
         st.markdown(final_explanation)
         st.session_state.history.append(("assistant", final_explanation))
@@ -107,13 +140,15 @@ def run_full_pipeline():
 if prompt := st.chat_input("What are you looking for today?"):
     # Display user message
     st.session_state.history.append(("user", prompt))
+    logger.info(f"User conversation history: {st.session_state.history}")
     with st.chat_message("user"):
         st.markdown(prompt)
 
     # Increment user turn counter and add message to model's history
     st.session_state.user_turns += 1
     st.session_state.messages.append({"role": "user", "content": prompt})
-    
+    logger.info(f"User prompt added to messages: {st.session_state.messages}")
+
     # Get assistant's response
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
@@ -136,7 +171,10 @@ if prompt := st.chat_input("What are you looking for today?"):
                     st.session_state.history.append(("assistant", response_content))
                     st.markdown(response_content)
 
-                
+                logger.info(f"Assistant response: {response_content}")
+                logger.info(f"Assistant response added to messages: {st.session_state.messages}")
+                logger.info(f"Assistant response added to history: {st.session_state.history}")
+
             else:
                 st.error("Sorry, I'm having trouble connecting. Please try again.")
 
