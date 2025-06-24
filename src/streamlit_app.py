@@ -4,6 +4,7 @@ import json
 import time
 import sys
 from loguru import logger
+
 def setup_logger():
     """Configure loguru logger with custom formatting"""
     config = {
@@ -33,7 +34,7 @@ sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 from agents.query_agent import QueryAgent
 from agents.mapping_agent import MappingAgent
-from agents.recommendation_agent import RecommendationAgent
+from agents.vector_recommendation_agent import VectorRecommendationAgent
 from agents.explainer_agent import ExplainerAgent
 
 st.set_page_config(page_title="Conversational Shopping Assistant", page_icon="🛍️")
@@ -61,7 +62,7 @@ def initialize_agents():
 
     query_agent = QueryAgent(paths["query"])
     mapping_agent = MappingAgent(paths["mapping"])
-    recommendation_agent = RecommendationAgent(paths["catalog"])
+    recommendation_agent = VectorRecommendationAgent(paths["catalog"])
     explainer_agent = ExplainerAgent(paths["explainer"])
     
     return query_agent, mapping_agent, recommendation_agent, explainer_agent
